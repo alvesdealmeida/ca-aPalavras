@@ -28,19 +28,35 @@
     overflow-x: hidden;
   }
 
+  /* BLOQUEIO DESKTOP / PC */
+  @media (min-width: 1025px) {
+    body::after {
+      content: "⚠️ Este jogo foi otimizado para Celulares e Tablets. Por favor, acesse via dispositivo móvel ou reduza a largura do seu navegador.";
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-family: 'Fredoka One', cursive;
+    }
+  }
+
   /* Stars background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image:
+    background-image: 
       radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.3) 0%, transparent 100%),
       radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,.25) 0%, transparent 100%),
       radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,.2) 0%, transparent 100%),
       radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,.2) 0%, transparent 100%),
-      radial-gradient(2px 2px at 35% 15%, rgba(255,255,255,.15) 0%, transparent 100%),
-      radial-gradient(2px 2px at 65% 70%, rgba(255,255,255,.15) 0%, transparent 100%);
+      radial-gradient(2px 2px at 35% 15%, rgba(255,255,255,.15) 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -50,105 +66,72 @@
     z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 16px;
+    padding: 10px;
   }
 
   header {
     text-align: center;
-    padding: 24px 0 12px;
+    padding: 15px 0 10px;
   }
   header h1 {
     font-family: 'Fredoka One', cursive;
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
     background: linear-gradient(135deg, var(--mat), var(--port), var(--cien), var(--geo));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: 1px;
-    text-shadow: none;
-    line-height: 1.1;
   }
-  header p {
-    color: #aab;
-    margin-top: 6px;
-    font-size: .95rem;
-  }
+  header p { color: #aab; font-size: 0.8rem; margin-top: 5px;}
 
-  /* Category selector */
   .cat-bar {
     display: flex;
-    flex-wrap: wrap;
+    overflow-x: auto;
     gap: 8px;
-    justify-content: center;
-    margin: 16px 0;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
   }
+  .cat-bar::-webkit-scrollbar { display: none; }
+
   .cat-btn {
     font-family: 'Fredoka One', cursive;
     border: none;
     border-radius: 50px;
-    padding: 8px 18px;
-    font-size: .9rem;
+    padding: 8px 15px;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: transform .15s, box-shadow .15s, opacity .15s;
-    letter-spacing: .5px;
-    position: relative;
+    white-space: nowrap;
     color: #1a1a2e;
     font-weight: 700;
   }
-  .cat-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  .cat-btn.active { outline: 3px solid #fff; outline-offset: 2px; transform: scale(1.05); }
+  .cat-btn.active { outline: 3px solid #fff; transform: scale(1.05); }
   .cat-btn[data-cat="matematica"]   { background: var(--mat); }
   .cat-btn[data-cat="portugues"]    { background: var(--port); }
   .cat-btn[data-cat="ciencias"]     { background: var(--cien); }
   .cat-btn[data-cat="geografia"]    { background: var(--geo); }
   .cat-btn[data-cat="historia"]     { background: var(--hist); }
 
-  /* Main layout */
   .game-area {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-    align-items: start;
-  }
-  @media (max-width: 768px) {
-    .game-area { grid-template-columns: 1fr; }
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  /* Grid */
   .grid-wrap {
     background: var(--card);
-    border-radius: 20px;
-    padding: 16px;
+    border-radius: 15px;
+    padding: 10px;
     box-shadow: 0 8px 32px rgba(0,0,0,.5);
     border: 1px solid rgba(255,255,255,.06);
   }
-  .grid-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .grid-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.1rem;
-    color: var(--text);
-  }
-  .score-badge {
-    background: var(--card2);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: .85rem;
-    font-weight: 700;
-    color: var(--found);
-    border: 1px solid var(--found);
-  }
-
+  
   #wordGrid {
     display: grid;
     gap: 2px;
     user-select: none;
-    cursor: default;
+    touch-action: none;
   }
+
   .cell {
     width: 100%;
     aspect-ratio: 1;
@@ -156,362 +139,216 @@
     align-items: center;
     justify-content: center;
     font-family: 'Fredoka One', cursive;
-    font-size: clamp(.6rem, 2.2vw, 1.05rem);
-    border-radius: 6px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.07);
-    transition: background .1s, transform .1s;
-    cursor: pointer;
+    font-size: clamp(0.7rem, 4vw, 1.2rem);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
     text-transform: uppercase;
   }
-  .cell:hover { background: rgba(255,255,255,.1); }
-  .cell.selected { background: rgba(255,255,255,.25); transform: scale(1.08); }
-  .cell.found {
-    color: #1a1a2e !important;
-    font-weight: 900;
-    transform: scale(1.0);
-    border-color: transparent;
-  }
+  .cell.selected { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+  .cell.found { color: #1a1a2e !important; }
 
-  /* Sidebar */
   .sidebar {
-    width: 240px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  @media (max-width: 768px) {
-    .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
-  .words-panel {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 14px;
-    box-shadow: 0 8px 32px rgba(0,0,0,.4);
-    border: 1px solid rgba(255,255,255,.06);
-    flex: 1;
-    min-width: 200px;
-  }
-  .words-panel h3 {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #aab;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: .8rem;
-  }
-  .word-list { list-style: none; }
-  .word-list li {
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: .85rem;
-    font-weight: 700;
-    letter-spacing: .5px;
-    margin-bottom: 4px;
-    transition: opacity .3s, text-decoration .3s;
+  .timer-bar {
+    grid-column: span 2;
+    background: var(--card2);
+    border-radius: 15px;
+    padding: 10px;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    gap: 6px;
+    border: 2px solid var(--accent);
   }
-  .word-list li::before {
-    content: '○';
-    font-size: .7rem;
-    flex-shrink: 0;
-  }
-  .word-list li.found-word {
-    text-decoration: line-through;
-    opacity: .45;
-  }
-  .word-list li.found-word::before { content: '✓'; }
+  .timer-val { font-size: 1.8rem; font-family: 'Fredoka One'; color: var(--accent); }
+  .timer-val.warning { animation: shake 0.2s infinite; color: #ff0000; }
 
-  /* Hint panel */
-  .hint-panel {
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+  }
+
+  .words-panel, .hint-panel {
     background: var(--card);
-    border-radius: 20px;
-    padding: 14px;
-    border: 1px solid rgba(255,255,255,.06);
-    min-width: 200px;
-    flex: 1;
-  }
-  .hint-panel h3 {
-    font-family: 'Fredoka One', cursive;
-    font-size: .8rem;
-    margin-bottom: 8px;
-    color: #aab;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .hint-text {
-    font-size: .82rem;
-    line-height: 1.5;
-    color: #ccd;
-    min-height: 48px;
+    border-radius: 15px;
+    padding: 12px;
+    font-size: 0.8rem;
   }
 
-  /* Controls */
   .controls {
+    grid-column: span 2;
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
   }
   .btn {
-    font-family: 'Fredoka One', cursive;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 20px;
-    font-size: .9rem;
-    cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
     flex: 1;
-    min-width: 100px;
-    letter-spacing: .5px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Fredoka One';
+    cursor: pointer;
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-  .btn-new { background: var(--accent); color: #fff; }
-  .btn-hint { background: var(--card2); color: var(--text); border: 1px solid rgba(255,255,255,.15); }
+  .btn-new { background: var(--accent); color: white; }
+  .btn-hint { background: var(--card2); color: white; }
 
-  /* Timer */
-  .timer-bar {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid rgba(255,255,255,.06);
-    font-family: 'Fredoka One', cursive;
-  }
-  .timer-label { color: #aab; font-size: .8rem; letter-spacing: 1px; }
-  .timer-val { font-size: 1.4rem; color: var(--text); }
-  .timer-val.warning { color: #ff6b6b; animation: pulse .5s infinite alternate; }
-  @keyframes pulse { from { opacity: 1 } to { opacity: .5 } }
-
-  /* Win overlay */
   .overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.75);
-    z-index: 100;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding: 20px;
   }
   .overlay.show { display: flex; }
-  .win-card {
-    background: var(--card);
-    border-radius: 28px;
-    padding: 40px 48px;
-    text-align: center;
-    box-shadow: 0 24px 80px rgba(0,0,0,.8);
-    border: 2px solid rgba(255,255,255,.1);
-    animation: popIn .4s cubic-bezier(.34,1.56,.64,1);
-  }
-  @keyframes popIn { from { transform: scale(.5); opacity: 0 } to { transform: scale(1); opacity: 1 } }
-  .win-emoji { font-size: 4rem; display: block; margin-bottom: 12px; }
-  .win-card h2 {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2rem;
-    background: linear-gradient(135deg, var(--mat), var(--port));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-  }
-  .win-card p { color: #aab; margin-bottom: 20px; }
-  .win-card .btn { width: 100%; font-size: 1rem; padding: 14px; }
-
-  /* Category description */
-  .cat-desc {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 10px 16px;
-    font-size: .82rem;
-    color: #aab;
-    border: 1px solid rgba(255,255,255,.06);
-    margin-bottom: 2px;
-  }
-  .cat-desc strong { color: var(--text); }
-
-  /* Progress bar */
-  .progress-wrap {
-    background: rgba(255,255,255,.07);
-    border-radius: 10px;
-    height: 8px;
-    overflow: hidden;
-    margin-top: 8px;
-  }
-  .progress-fill {
-    height: 100%;
-    border-radius: 10px;
-    transition: width .4s ease;
-    background: linear-gradient(90deg, var(--port), var(--found));
-  }
+  .win-card { background: var(--card); padding: 30px; border-radius: 20px; border: 2px solid gold; }
 </style>
 </head>
 <body>
+
 <div class="container">
   <header>
     <h1>🔤 Caça-Palavras Educativo</h1>
-    <p>Encontre as palavras escondidas e aprenda enquanto joga!</p>
     <p>Powered by Sebastiao Alves de Almeida</p>
   </header>
 
   <div class="cat-bar" id="catBar"></div>
-  <div class="cat-desc" id="catDesc"></div>
-
+  
   <div class="game-area">
     <div class="grid-wrap">
-      <div class="grid-info">
-        <span class="grid-title" id="gridTitle">Selecione uma categoria</span>
-        <span class="score-badge" id="scoreBadge">0 / 0</span>
-      </div>
       <div id="wordGrid"></div>
-      <div class="progress-wrap"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+      <div class="progress-wrap" style="height: 6px; background: #333; margin-top:10px; border-radius:3px;">
+        <div id="progress" style="width:0%; height:100%; background: var(--found); transition: 0.3s;"></div>
+      </div>
     </div>
 
     <div class="sidebar">
       <div class="timer-bar">
-        <span class="timer-label">⏱ TEMPO</span>
-        <span class="timer-val" id="timerVal">0:00</span>
+        <span class="timer-label">⏳ TEMPO:</span>
+        <span class="timer-val" id="timerVal">01:30</span>
       </div>
+      
       <div class="words-panel">
-        <h3>📋 Palavras</h3>
-        <ul class="word-list" id="wordList"></ul>
+        <ul class="word-list" id="wordList" style="list-style:none"></ul>
       </div>
+
       <div class="hint-panel">
-        <h3>💡 Dica</h3>
-        <p class="hint-text" id="hintText">Selecione uma categoria e clique em Nova Partida para começar!</p>
+        <p id="hintText">Encontre as palavras!</p>
       </div>
+
       <div class="controls">
-        <button class="btn btn-new" onclick="newGame()">🔄 Nova</button>
-        <button class="btn btn-hint" onclick="showHint()">💡 Dica</button>
+        <button class="btn btn-new" onclick="newGame()">🔄 NOVO JOGO</button>
+        <button class="btn btn-hint" onclick="showHint()">💡 DICA</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="overlay" id="overlay">
-  <div class="win-card">
-    <span class="win-emoji">🏆</span>
-    <h2>Parabéns!</h2>
-    <p id="winMsg">Você encontrou todas as palavras!</p>
-    <button class="btn btn-new" onclick="newGame(); closeOverlay()">🔄 Jogar Novamente</button>
+  <div class="win-card" id="winCard">
+    <span style="font-size: 5rem;" id="winIcon">🏆</span>
+    <h2 id="winTitle" style="font-family: 'Fredoka One'; margin: 15px 0;">VITÓRIA!</h2>
+    <p id="winMsg" style="margin-bottom: 20px;"></p>
+    <button class="btn btn-new" onclick="closeOverlay(); newGame();">PRÓXIMO NÍVEL</button>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════
+// SISTEMA DE AUDIO SINTETIZADO
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playSound(type) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    if (type === 'gain') {
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+    } else if (type === 'lose') {
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+    } else if (type === 'win') {
+        [523, 659, 783].forEach((f, i) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.frequency.value = f; o.connect(g); g.connect(audioCtx.destination);
+            g.gain.setValueAtTime(0.05, audioCtx.currentTime + i*0.1);
+            o.start(audioCtx.currentTime + i*0.1); o.stop(audioCtx.currentTime + i*0.1 + 0.4);
+        });
+    }
+}
+
+// BANCO DE DADOS AMPLIADO (Novas palavras adicionadas aqui)
 const CATEGORIES = {
-  matematica: {
-    label: '➕ Matemática',
-    color: '#FF6B35',
-    desc: 'Operações, formas e números do mundo da <strong>Matemática</strong>',
-    words: [
-      { w: 'TRIANGULO',  hint: 'Figura geométrica com 3 lados e 3 ângulos.' },
-      { w: 'FRACAO',     hint: 'Representa parte de um todo. Ex: 1/2, 3/4.' },
-      { w: 'NUMERO',     hint: 'Símbolo usado para contar ou medir.' },
-      { w: 'SOMA',       hint: 'Operação de adição entre valores.' },
-      { w: 'DIVISAO',    hint: 'Distribuir igualmente entre partes.' },
-      { w: 'QUADRADO',   hint: 'Polígono com 4 lados e ângulos iguais.' },
-      { w: 'ANGULO',     hint: 'Espaço entre dois raios com a mesma origem.' },
-      { w: 'PERIMETRO',  hint: 'Soma de todos os lados de uma figura.' },
-      { w: 'AREA',       hint: 'Medida da superfície de uma figura.' },
-      { w: 'DEZENA',     hint: 'Grupo de dez unidades.' },
-    ]
-  },
-  portugues: {
-    label: '📖 Português',
-    color: '#4ECDC4',
-    desc: 'Gramática e escrita da <strong>Língua Portuguesa</strong>',
-    words: [
-      { w: 'SUBSTANTIVO', hint: 'Classe de palavras que nomeia seres e coisas.' },
-      { w: 'VERBO',       hint: 'Palavra que indica ação, estado ou fenômeno.' },
-      { w: 'ADJETIVO',    hint: 'Caracteriza ou qualifica um substantivo.' },
-      { w: 'SILABA',      hint: 'Menor unidade sonora da palavra.' },
-      { w: 'SUJEITO',     hint: 'Termo sobre quem se faz uma afirmação.' },
-      { w: 'POEMA',       hint: 'Texto literário com versos e ritmo.' },
-      { w: 'LETRA',       hint: 'Símbolo gráfico que representa um som.' },
-      { w: 'CONTO',       hint: 'Narrativa curta de ficção.' },
-      { w: 'SINONIMO',    hint: 'Palavra de significado igual ou semelhante.' },
-      { w: 'VOGAL',       hint: 'A, E, I, O ou U.' },
-    ]
-  },
-  ciencias: {
-    label: '🔬 Ciências',
-    color: '#45B7D1',
-    desc: 'Descubra conceitos do mundo natural em <strong>Ciências</strong>',
-    words: [
-      { w: 'FOTOSSINTESE', hint: 'Processo em que plantas produzem energia com a luz.' },
-      { w: 'CELULA',       hint: 'Unidade básica de todos os seres vivos.' },
-      { w: 'OXIGENIO',     hint: 'Gás essencial para a respiração.' },
-      { w: 'ECOSISTEMA',   hint: 'Conjunto de seres vivos e seu ambiente.' },
-      { w: 'ENERGIA',      hint: 'Capacidade de realizar trabalho ou movimento.' },
-      { w: 'VOLCANO',      hint: 'Abertura na crosta que expele magma.' },
-      { w: 'ATOMO',        hint: 'Menor partícula de um elemento químico.' },
-      { w: 'MAGNETISMO',   hint: 'Força de atração ou repulsão entre imãs.' },
-      { w: 'CADEIA',       hint: 'Sequência de seres que se alimentam entre si.' },
-      { w: 'PULMAO',       hint: 'Órgão responsável pela respiração humana.' },
-    ]
-  },
-  geografia: {
-    label: '🌍 Geografia',
-    color: '#96CEB4',
-    desc: 'Explore o planeta em <strong>Geografia</strong>',
-    words: [
-      { w: 'AMAZONIA',    hint: 'Maior floresta tropical do mundo, no Brasil.' },
-      { w: 'LATITUDE',    hint: 'Distância angular ao norte ou sul do Equador.' },
-      { w: 'CAPITAL',     hint: 'Cidade sede do governo de um país ou estado.' },
-      { w: 'OCEANO',      hint: 'Grande massa de água salgada do planeta.' },
-      { w: 'CONTINENTE',  hint: 'Grande extensão de terra. Ex: América, Europa.' },
-      { w: 'RELEVO',      hint: 'Conjunto de formas da superfície terrestre.' },
-      { w: 'CLIMA',       hint: 'Conjunto de condições atmosféricas de uma região.' },
-      { w: 'MAPA',        hint: 'Representação gráfica de uma área geográfica.' },
-      { w: 'EQUADOR',     hint: 'Linha imaginária que divide a Terra ao meio.' },
-      { w: 'SERRA',       hint: 'Cadeia de montanhas com picos irregulares.' },
-    ]
-  },
-  historia: {
-    label: '🏛️ História',
-    color: '#FFEAA7',
-    desc: 'Viaje pelo tempo com a <strong>História</strong>',
-    words: [
-      { w: 'REPUBLICA',   hint: 'Forma de governo proclamada no Brasil em 1889.' },
-      { w: 'INDIGENA',    hint: 'Povo nativo que habitava o Brasil antes da colonização.' },
-      { w: 'ESCRAVIDAO',  hint: 'Sistema de exploração de pessoas como propriedade.' },
-      { w: 'REVOLUÇÃO',   hint: 'Mudança radical e rápida em um sistema político.' },
-      { w: 'COLONIA',     hint: 'Território dominado por outro país.' },
-      { w: 'ABOLIÇÃO',    hint: 'Fim da escravidão no Brasil, em 1888.' },
-      { w: 'GUERREIRA',   hint: 'Mulher que combate em batalhas.' },
-      { w: 'FARAOS',      hint: 'Reis do Antigo Egito, considerados divinos.' },
-      { w: 'PIRÂMIDE',    hint: 'Monumento funerário egípcio de forma triangular.' },
-      { w: 'DEMOCRACIA',  hint: 'Sistema político em que o povo governa.' },
-    ]
-  }
+  matematica: { label: '➕ Mat', color: '#FF6B35', words: [
+    { w: 'TRIANGULO', hint: '3 lados e 3 ângulos.' }, { w: 'FRACAO', hint: 'Parte de um todo.' },
+    { w: 'NUMERO', hint: 'Símbolo para contar.' }, { w: 'SOMA', hint: 'Adição.' },
+    { w: 'DIVISAO', hint: 'Repartir em partes.' }, { w: 'QUADRADO', hint: '4 lados iguais.' },
+    { w: 'SUBTRACAO', hint: 'Operação de menos.' }, { w: 'MULTIPLICACAO', hint: 'Vezes.' },
+    { w: 'ANGULO', hint: 'Encontro de duas retas.' }, { w: 'ALGEBRA', hint: 'Letras e números.' },
+    { w: 'GEOMETRIA', hint: 'Estudo das formas.' }, { w: 'LOGICA', hint: 'Raciocínio correto.' },
+    { w: 'CALCULO', hint: 'Ato de computar.' }, { w: 'CILINDRO', hint: 'Forma de lata.' },
+    { w: 'LOSANGO', hint: 'Forma do balão.' }, { w: 'TABUADA', hint: 'Tabela de cálculo.' }
+  ]},
+  portugues: { label: '📖 Port', color: '#4ECDC4', words: [
+    { w: 'VERBO', hint: 'Indica ação.' }, { w: 'SILABA', hint: 'Unidade sonora.' },
+    { w: 'POEMA', hint: 'Texto em versos.' }, { w: 'LETRA', hint: 'Símbolo do som.' },
+    { w: 'CONTO', hint: 'Narrativa curta.' }, { w: 'VOGAL', hint: 'A, E, I, O, U.' },
+    { w: 'ADJETIVO', hint: 'Dá qualidade.' }, { w: 'SUJEITO', hint: 'Quem faz a ação.' },
+    { w: 'RIMA', hint: 'Sons iguais no final.' }, { w: 'FRASE', hint: 'Sentido completo.' },
+    { w: 'SINTAXE', hint: 'Ordem das palavras.' }, { w: 'METAFORA', hint: 'Comparação implícita.' },
+    { w: 'REDACAO', hint: 'Escrever um texto.' }, { w: 'DITONGO', hint: 'Duas vogais juntas.' },
+    { w: 'PROSOPΟPEIA', hint: 'Humanizar objetos.' }, { w: 'GRAMATICA', hint: 'Regras da língua.' }
+  ]},
+  ciencias: { label: '🔬 Cien', color: '#45B7D1', words: [
+    { w: 'CELULA', hint: 'Unidade da vida.' }, { w: 'OXIGENIO', hint: 'Gás vital.' },
+    { w: 'ENERGIA', hint: 'Capacidade de trabalho.' }, { w: 'ATOMO', hint: 'Menor partícula.' },
+    { w: 'PLANETA', hint: 'Corpo que orbita o Sol.' }, { w: 'SANGUE', hint: 'Líquido da vida.' },
+    { w: 'ESPECIE', hint: 'Grupo de seres iguais.' }, { w: 'FOSSIL', hint: 'Resto antigo.' },
+    { w: 'GENETICA', hint: 'Estudo do DNA.' }, { w: 'INVERTEBRADO', hint: 'Sem ossos.' },
+    { w: 'MAMIFERO', hint: 'Mamar quando bebê.' }, { w: 'REACAO', hint: 'Mudança química.' },
+    { w: 'SOLVENTE', hint: 'Dissolve substâncias.' }, { w: 'VACINA', hint: 'Proteção contra vírus.' }
+  ]},
+  geografia: { label: '🌍 Geo', color: '#96CEB4', words: [
+    { w: 'OCEANO', hint: 'Água salgada.' }, { w: 'MAPA', hint: 'Desenho da terra.' },
+    { w: 'CLIMA', hint: 'Tempo da região.' }, { w: 'SERRA', hint: 'Montanhas.' },
+    { w: 'CAPITAL', hint: 'Cidade principal.' }, { w: 'ESTADO', hint: 'Divisão do país.' },
+    { w: 'RELEVO', hint: 'Formas da terra.' }, { w: 'DESERTO', hint: 'Lugar muito seco.' },
+    { w: 'FLORESTA', hint: 'Muitas árvores.' }, { w: 'FRONTEIRA', hint: 'Limite entre países.' },
+    { w: 'MIGRAÇÃO', hint: 'Mudar de lugar.' }, { w: 'PECUARIA', hint: 'Criação de gado.' },
+    { w: 'ROCHA', hint: 'Pedra natural.' }, { w: 'TURISMO', hint: 'Viajar a lazer.' }
+  ]},
+  historia: { label: '🏛️ Hist', color: '#FFEAA7', words: [
+    { w: 'FARAOS', hint: 'Reis do Egito.' }, { w: 'COLONIA', hint: 'Território dominado.' },
+    { w: 'PIRAMIDE', hint: 'Túmulo egípcio.' }, { w: 'DEMOCRACIA', hint: 'Governo do povo.' },
+    { w: 'GUERRA', hint: 'Conflito armado.' }, { w: 'REPUBLICA', hint: 'Coisa pública.' },
+    { w: 'IMPERIO', hint: 'Território de um imperador.' }, { w: 'ESCRAVAO', hint: 'Trabalho forçado.' },
+    { w: 'MONARQUIA', hint: 'Rei ou rainha.' }, { w: 'REVOLUÇÃO', hint: 'Mudança radical.' },
+    { w: 'NAVEGACAO', hint: 'Viagens pelo mar.' }, { w: 'MUSEU', hint: 'Guarda o passado.' },
+    { w: 'TRADICAO', hint: 'Passado de pais para filhos.' }
+  ]}
 };
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
 let currentCat = 'matematica';
 let gridLetters = [];
-let gridSize = 14;
+let gridSize = 10;
 let placedWords = [];
 let foundWords = new Set();
 let selecting = false;
 let selStart = null;
 let selCells = [];
 let timerInterval = null;
-let seconds = 0;
-let hintIndex = 0;
-let totalWords = 0;
+let timeLeft = 90;
 
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
 function init() {
   buildCatBar();
   selectCat('matematica');
@@ -533,85 +370,66 @@ function buildCatBar() {
 function selectCat(key) {
   currentCat = key;
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === key));
-  document.getElementById('catDesc').innerHTML = CATEGORIES[key].desc;
-  document.getElementById('gridTitle').textContent = CATEGORIES[key].label;
 }
 
-// ═══════════════════════════════════════════
-// GAME GENERATION
-// ═══════════════════════════════════════════
 function newGame() {
   foundWords.clear();
-  hintIndex = 0;
   clearInterval(timerInterval);
-  seconds = 0;
-  updateTimer();
-
+  timeLeft = 90;
+  updateTimerDisplay();
+  
   const catData = CATEGORIES[currentCat];
-  // pick 8 words
-  const wordObjs = shuffle([...catData.words]).slice(0, 8);
-  totalWords = wordObjs.length;
-
+  // SORTEIO ALEATÓRIO: Pega 5 palavras aleatórias da lista de 15+ da categoria
+  const wordObjs = shuffle([...catData.words]).slice(0, 5);
+  
   gridLetters = Array.from({length: gridSize}, () => Array(gridSize).fill(''));
   placedWords = [];
+  wordObjs.forEach(wo => placeWord(wo.w.toUpperCase(), wo.hint));
 
-  // try to place all words
-  wordObjs.forEach(wo => {
-    placeWord(wo.w.toUpperCase(), wo.hint);
-  });
-
-  // fill blanks
   const alpha = 'ABCDEFGHIJKLMNOPRSTUVZ';
   for (let r = 0; r < gridSize; r++)
     for (let c = 0; c < gridSize; c++)
-      if (!gridLetters[r][c])
-        gridLetters[r][c] = alpha[Math.floor(Math.random() * alpha.length)];
+      if (!gridLetters[r][c]) gridLetters[r][c] = alpha[Math.floor(Math.random() * alpha.length)];
 
   renderGrid();
-  renderWordList(wordObjs);
+  renderWordList();
   updateScore();
 
   timerInterval = setInterval(() => {
-    seconds++;
-    updateTimer();
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 10) playSound('lose');
+    if (timeLeft <= 0) gameOver();
   }, 1000);
+}
 
-  document.getElementById('hintText').textContent = 'Clique em 💡 Dica para revelar uma pista!';
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+  const el = document.getElementById('timerVal');
+  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  el.classList.toggle('warning', timeLeft <= 15);
 }
 
 function placeWord(word, hint) {
-  const dirs = shuffle([
-    [0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]
-  ]);
-  for (const [dr, dc] of dirs) {
-    const maxR = dr === 0 ? gridSize : (dr > 0 ? gridSize - word.length : word.length - 1);
-    const maxC = dc === 0 ? gridSize : (dc > 0 ? gridSize - word.length : word.length - 1);
-    const minR = dr < 0 ? word.length - 1 : 0;
-    const minC = dc < 0 ? word.length - 1 : 0;
-    for (let attempt = 0; attempt < 40; attempt++) {
-      const sr = minR + Math.floor(Math.random() * (maxR - minR || 1));
-      const sc = minC + Math.floor(Math.random() * (maxC - minC || 1));
-      let ok = true;
-      const cells = [];
+  const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0]];
+  for (const [dr, dc] of shuffle(dirs)) {
+    for (let attempt = 0; attempt < 50; attempt++) {
+      const sr = Math.floor(Math.random() * gridSize), sc = Math.floor(Math.random() * gridSize);
+      let ok = true, cells = [];
       for (let i = 0; i < word.length; i++) {
         const r = sr + dr * i, c = sc + dc * i;
-        if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) { ok = false; break; }
-        if (gridLetters[r][c] && gridLetters[r][c] !== word[i]) { ok = false; break; }
+        if (r<0||r>=gridSize||c<0||c>=gridSize||(gridLetters[r][c]&&gridLetters[r][c]!==word[i])) {ok=false; break;}
         cells.push([r, c]);
       }
       if (ok) {
         cells.forEach(([r, c], i) => gridLetters[r][c] = word[i]);
         placedWords.push({ word, hint, cells });
-        return true;
+        return;
       }
     }
   }
-  return false;
 }
 
-// ═══════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════
 function renderGrid() {
   const grid = document.getElementById('wordGrid');
   grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -621,169 +439,109 @@ function renderGrid() {
       const cell = document.createElement('div');
       cell.className = 'cell';
       cell.textContent = gridLetters[r][c];
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-      cell.addEventListener('mousedown', startSelect);
-      cell.addEventListener('mouseover', moveSelect);
-      cell.addEventListener('mouseup', endSelect);
-      cell.addEventListener('touchstart', e => { e.preventDefault(); startSelect(e.touches[0]); }, {passive: false});
-      cell.addEventListener('touchmove', e => { e.preventDefault(); const t = e.touches[0]; moveSelect({target: document.elementFromPoint(t.clientX, t.clientY)}); }, {passive: false});
-      cell.addEventListener('touchend', e => { e.preventDefault(); endSelect(); }, {passive: false});
+      cell.dataset.r = r; cell.dataset.c = c;
+      cell.onmousedown = startSelect; cell.onmouseover = moveSelect; cell.onmouseup = endSelect;
+      cell.ontouchstart = e => { startSelect(e.touches[0]); };
+      cell.ontouchmove = e => { 
+        const t = e.touches[0]; 
+        moveSelect({target: document.elementFromPoint(t.clientX, t.clientY)}); 
+      };
+      cell.ontouchend = endSelect;
       grid.appendChild(cell);
     }
   }
 }
 
-function renderWordList(wordObjs) {
+function startSelect(e) { 
+    selecting = true; 
+    const c = cellAt(e.target || e); 
+    if(c) { selStart = c; selCells = [c]; highlight(); }
+}
+function moveSelect(e) { 
+    if (!selecting) return; 
+    const cur = cellAt(e.target || e); 
+    if(cur) { selCells = getCellsBetween(selStart, cur); highlight(); }
+}
+function endSelect() { 
+    if (!selecting) return; 
+    selecting = false; 
+    checkWord(); 
+    document.querySelectorAll('.cell').forEach(c => c.classList.remove('selected'));
+}
+
+function checkWord() {
+  const selected = selCells.map(({r, c}) => gridLetters[r][c]).join('');
+  const pw = placedWords.find(p => (p.word === selected || p.word === selected.split('').reverse().join('')) && !foundWords.has(p.word));
+  if (pw) {
+    foundWords.add(pw.word);
+    pw.cells.forEach(([r, c]) => {
+      const el = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+      el.classList.add('found');
+      el.style.background = CATEGORIES[currentCat].color;
+    });
+    document.getElementById('word-'+pw.word).style.textDecoration = 'line-through';
+    document.getElementById('word-'+pw.word).style.opacity = '0.5';
+    playSound('gain');
+    updateScore();
+    if (foundWords.size === placedWords.length) winLevel();
+  }
+}
+
+function winLevel() {
+    clearInterval(timerInterval);
+    playSound('win');
+    showOverlay('🏆 VITÓRIA!', `Nível concluído com sucesso!`);
+}
+
+function gameOver() {
+    clearInterval(timerInterval);
+    playSound('lose');
+    showOverlay('⏰ FIM DE TEMPO', 'Tente novamente!');
+}
+
+function showOverlay(title, msg) {
+    document.getElementById('winTitle').textContent = title;
+    document.getElementById('winMsg').textContent = msg;
+    document.getElementById('overlay').classList.add('show');
+}
+
+function closeOverlay() { document.getElementById('overlay').classList.remove('show'); }
+
+function renderWordList() {
   const list = document.getElementById('wordList');
   list.innerHTML = '';
   placedWords.forEach(pw => {
     const li = document.createElement('li');
     li.id = 'word-' + pw.word;
-    li.textContent = pw.word;
-    li.style.color = CATEGORIES[currentCat].color;
+    li.textContent = '○ ' + pw.word;
     list.appendChild(li);
   });
 }
 
 function updateScore() {
-  const found = foundWords.size;
-  document.getElementById('scoreBadge').textContent = `${found} / ${placedWords.length}`;
-  const pct = placedWords.length ? (found / placedWords.length * 100) : 0;
+  const pct = (foundWords.size / placedWords.length) * 100;
   document.getElementById('progress').style.width = pct + '%';
 }
 
-function updateTimer() {
-  const m = Math.floor(seconds / 60), s = seconds % 60;
-  const el = document.getElementById('timerVal');
-  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
-  el.className = 'timer-val' + (seconds > 120 ? ' warning' : '');
+function showHint() {
+    const rem = placedWords.filter(p => !foundWords.has(p.word));
+    if(rem.length) document.getElementById('hintText').innerHTML = `<strong>DICA:</strong> ${rem[0].hint}`;
 }
 
-// ═══════════════════════════════════════════
-// SELECTION
-// ═══════════════════════════════════════════
-function cellAt(el) {
-  if (!el || !el.dataset || el.dataset.r === undefined) return null;
-  return { r: +el.dataset.r, c: +el.dataset.c };
+function cellAt(el) { return (el && el.dataset && el.dataset.r !== undefined) ? {r:+el.dataset.r, c:+el.dataset.c} : null; }
+function highlight() {
+  document.querySelectorAll('.cell').forEach(c => c.classList.remove('selected'));
+  selCells.forEach(({r, c}) => document.querySelector(`[data-r="${r}"][data-c="${c}"]`)?.classList.add('selected'));
 }
-
-function startSelect(e) {
-  selecting = true;
-  selStart = cellAt(e.target);
-  selCells = selStart ? [selStart] : [];
-  highlightSelected();
-}
-
-function moveSelect(e) {
-  if (!selecting || !selStart) return;
-  const cur = cellAt(e.target);
-  if (!cur) return;
-  selCells = getCellsBetween(selStart, cur);
-  highlightSelected();
-}
-
-function endSelect() {
-  if (!selecting) return;
-  selecting = false;
-  checkWord();
-  clearSelection();
-}
-
 function getCellsBetween(a, b) {
-  const dr = b.r - a.r, dc = b.c - a.c;
-  const len = Math.max(Math.abs(dr), Math.abs(dc));
+  const dr = b.r - a.r, dc = b.c - a.c, len = Math.max(Math.abs(dr), Math.abs(dc));
   if (len === 0) return [a];
-  // must be straight or diagonal
   if (Math.abs(dr) !== 0 && Math.abs(dc) !== 0 && Math.abs(dr) !== Math.abs(dc)) return [a];
   const sr = Math.sign(dr), sc = Math.sign(dc);
   return Array.from({length: len + 1}, (_, i) => ({r: a.r + sr*i, c: a.c + sc*i}));
 }
+function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
 
-function highlightSelected() {
-  document.querySelectorAll('.cell').forEach(c => {
-    if (!c.classList.contains('found')) c.classList.remove('selected');
-  });
-  selCells.forEach(({r, c}) => {
-    const el = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
-    if (el && !el.classList.contains('found')) el.classList.add('selected');
-  });
-}
-
-function clearSelection() {
-  selCells = [];
-  selStart = null;
-  document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
-}
-
-function checkWord() {
-  const selected = selCells.map(({r, c}) => gridLetters[r][c]).join('');
-  const rev = selected.split('').reverse().join('');
-  for (const pw of placedWords) {
-    if (foundWords.has(pw.word)) continue;
-    if (pw.word === selected || pw.word === rev) {
-      markFound(pw);
-      return;
-    }
-  }
-}
-
-function markFound(pw) {
-  foundWords.add(pw.word);
-  const color = CATEGORIES[currentCat].color;
-  pw.cells.forEach(([r, c]) => {
-    const el = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
-    if (el) {
-      el.classList.add('found');
-      el.style.background = color;
-    }
-  });
-  const li = document.getElementById('word-' + pw.word);
-  if (li) li.classList.add('found-word');
-  document.getElementById('hintText').textContent = `✅ ${pw.word}: ${pw.hint}`;
-  updateScore();
-  if (foundWords.size === placedWords.length) {
-    clearInterval(timerInterval);
-    setTimeout(showWin, 600);
-  }
-}
-
-// ═══════════════════════════════════════════
-// HINT
-// ═══════════════════════════════════════════
-function showHint() {
-  const remaining = placedWords.filter(pw => !foundWords.has(pw.word));
-  if (remaining.length === 0) return;
-  const pw = remaining[hintIndex % remaining.length];
-  document.getElementById('hintText').textContent = `💡 ${pw.word}: ${pw.hint}`;
-  hintIndex++;
-}
-
-// ═══════════════════════════════════════════
-// WIN
-// ═══════════════════════════════════════════
-function showWin() {
-  const m = Math.floor(seconds / 60), s = seconds % 60;
-  document.getElementById('winMsg').textContent =
-    `Você encontrou todas as ${placedWords.length} palavras em ${m}:${s.toString().padStart(2,'0')}! 🎉`;
-  document.getElementById('overlay').classList.add('show');
-}
-function closeOverlay() {
-  document.getElementById('overlay').classList.remove('show');
-}
-
-// ═══════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-document.addEventListener('mouseup', () => { if (selecting) { selecting = false; checkWord(); clearSelection(); } });
 init();
 </script>
 </body>
